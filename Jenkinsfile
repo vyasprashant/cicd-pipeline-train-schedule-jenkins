@@ -1,4 +1,7 @@
-# Pipeline for Gradle build to be used on minikube
+#! #!/bin/groovy
+
+//Pipeline for Gradle build to be used on minikube
+
 pipeline {
     agent any
     stages {
