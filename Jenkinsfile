@@ -49,10 +49,31 @@ pipeline {
                 input 'Deploy To minikube?'
                 milestone(1) {
                     script {
+                        env.KUBE_CONTEXT = 'minikube'
+                        env.NAMESPACE = 'test-dev'
                         try {
+                            stage("Minikube: DEV Deploy") {
                             withKubeConfig([credentialsId: 'kube-config', variable: 'KUBECONFIG']) {
-                            kubectl run train-schedule -n test-dev --image=prashantvyas/train-schedule:latest
+                                script {
+                                    env.KUBE_CONTEXT = 'minikube'
+                                    env.NAMESPACE = 'test-dev'
+                                }
+                                try {
+                                    sh """
+                                        export KUBE_CONTEXT=${KUBE_CONTEXT}
+                                        export NAMESPACE=${NAMESPACE}
+                                    """
+                                } catch (error) {
+                                    sh """
+                                      kubectl config use-context ${KUBE_CONTEXT} 
+                                      kubectl run train-schedule -n ${NAMESPACE} --image=prashantvyas/train-schedule:latest
+                                    """
+                                    throw error
+                                }
                             }
+                            }
+                        } catch (error) {
+                            throw error
                         }
                     }
                 }
