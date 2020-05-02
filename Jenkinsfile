@@ -5,7 +5,7 @@
 pipeline {
     agent any
     stages {
-        stage(Checkout Code from GitHub) {
+        stage('Checkout Code from GitHub') {
             steps {
                 echo 'Running Build Automation'
                 sh './gradlew build --no-daemon'
