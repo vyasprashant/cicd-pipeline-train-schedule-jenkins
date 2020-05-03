@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                       docker build -t prashantvyas/train-schedule
+                       docker-build.sh
                     """
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
