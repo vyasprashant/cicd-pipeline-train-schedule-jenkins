@@ -5,14 +5,15 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout Code from GitHub') {
-            steps {
-                echo 'Running Build Automation'
-                sh './gradlew build --no-daemon'
-                archiveArtifacts artifacts: 'dist/trainschedule.zip'
-            }
+//        stage('Checkout Code from GitHub') {
+//            steps {
+//                echo 'Running Build Automation'
+//                sh './gradlew build --no-daemon'
+//                archiveArtifacts artifacts: 'dist/trainschedule.zip'
+//            }
+//
+//        }
 
-        }
         stage('Build Docker Image') {
             when {
                 branch 'master'

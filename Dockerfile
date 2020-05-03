@@ -1,7 +1,4 @@
-FROM node:carbon
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY . .
+FROM nginx:stable
+WORKDIR /usr/share/nginx/html
+COPY src/* .
 EXPOSE 8080
-CMD ["npm", "start"]
