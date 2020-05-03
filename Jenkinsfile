@@ -30,7 +30,8 @@ pipeline {
             steps {
                 script {
                     sh """
-                       docker-build.sh
+                       pwd
+                       ./docker-build.sh
                     """
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
