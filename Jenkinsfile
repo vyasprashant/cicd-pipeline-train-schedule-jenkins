@@ -18,9 +18,18 @@ pipeline {
 //            when {
 //                branch 'master'
 //            }
+//            steps {
+//                script {
+//                    app = docker.build("prashantvyas/train-schedule")
+//                    app.inside {
+//                        sh 'echo $(curl localhost:8080)'
+//                    }
+//                }
+//            }
+//        }
             steps {
                 script {
-                    app = docker.build("prashantvyas/train-schedule")
+                    "docker build -t prashantvyas/train-schedule"
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
                     }
@@ -28,9 +37,9 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-//            when {
-//                branch 'master'
-//            }
+            when {
+                branch 'master'
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                 script {
@@ -43,9 +52,9 @@ pipeline {
             }
         }
         stage('Deploy To minikube') {
-//            when {
-//                branch 'master'
-//            }
+            when {
+                branch 'master'
+            }
             steps {
                 input 'Deploy To minikube?'
                 milestone(1) {
